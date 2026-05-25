@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SSD | SESI Sociedade de Debates</title>
+  <style>
+    :root{
+      --blue:#2d73c9;--blue-dark:#0f3f83;--ink:#101216;--text:#20242d;--muted:#687083;
+      --line:#e7edf6;--soft:#f4f7fc;--white:#fff;--radius:22px;
+      --shadow:0 18px 44px rgba(12,29,66,.12)
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(135deg,#fff,#f3f7ff);color:var(--text)}
+    .app{display:grid;grid-template-columns:86px 1fr;min-height:100vh;transition:grid-template-columns .22s ease}
+    .app.nav-open{grid-template-columns:285px 1fr}
+    aside{background:var(--ink);color:#fff;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
+    .menu-toggle{width:50px;height:50px;border-radius:16px;padding:0;display:grid;place-items:center;margin-bottom:18px;background:#fff;color:var(--blue-dark);font-size:1.35rem}
+    .app:not(.nav-open) aside{overflow:hidden}
+    .app:not(.nav-open) .brand{justify-content:center}
+    .app:not(.nav-open) .brand h1,.app:not(.nav-open) .brand small,.app:not(.nav-open) .nav,.app:not(.nav-open) .tip{display:none}
+    .brand{display:flex;gap:12px;align-items:center;margin-bottom:26px}.mark{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg,var(--blue),#fff 190%);display:grid;place-items:center;font-weight:950}.brand h1{font-size:1rem;margin:0;line-height:1.15}.brand small{color:#bac6da}
+    .nav{display:grid;gap:8px}.nav button{border:0;background:transparent;color:#dbe5f5;text-align:left;padding:13px;border-radius:15px;cursor:pointer;font-weight:800}.nav button:hover,.nav button.on{background:rgba(45,115,201,.25);color:#fff;box-shadow:inset 4px 0 0 var(--blue)}
+    .tip{margin-top:26px;padding:16px;border-radius:18px;background:rgba(45,115,201,.22);border:1px solid rgba(255,255,255,.12);color:#dce7f7}.tip p{color:#dce7f7;margin:8px 0 0}
+    main{padding:32px}p{color:var(--muted);line-height:1.65}
+    button,.btn{border:0;border-radius:14px;background:var(--blue);color:#fff;font-weight:900;padding:11px 14px;cursor:pointer}.btn2{background:#edf3fb;color:var(--blue-dark)}.danger{background:#fee2e2;color:#991b1b}.ghost{background:#fff;color:var(--blue-dark);border:1px solid var(--line)}
+    .sec{display:none}.sec.on{display:block}.grid{display:grid;gap:22px}.c4{grid-template-columns:repeat(4,1fr)}.c3{grid-template-columns:repeat(3,1fr)}.c2{grid-template-columns:repeat(2,1fr)}.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}.card h3,.card h4{margin:0 0 10px}.tools{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:16px}.tools h2{margin:0}.metric small,.muted{color:var(--muted)}.metric small{font-weight:900}.metric b{font-size:2rem;display:block;margin:5px 0}.bar{height:10px;background:#eaf0f8;border-radius:99px;overflow:hidden;margin-top:10px}.bar i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--blue),var(--blue-dark))}
+    input,select,textarea{width:100%;border:1px solid #dbe3ee;border-radius:13px;padding:11px;font:inherit;background:#fff}textarea{min-height:92px;resize:vertical}label{display:grid;gap:6px;color:var(--muted);font-weight:850;font-size:.88rem}.form{display:grid;grid-template-columns:1fr 1fr;gap:13px}.full{grid-column:1/-1}
+    table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}.pill{display:inline-flex;margin:2px;padding:6px 9px;border-radius:999px;background:#eff6ff;color:var(--blue-dark);font-size:.78rem;font-weight:900}.green{background:#dcfce7;color:#166534}.yellow{background:#fef3c7;color:#92400e}.red{background:#fee2e2;color:#991b1b}.black{background:#ebedf1;color:#111}.empty{padding:22px;text-align:center;border:1px dashed #cad6e6;border-radius:16px;background:#f8fbff;color:var(--muted)}
+    .debater-card{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding:16px;border:1px solid var(--line);border-radius:18px;background:#fff}.avatar{width:42px;height:42px;border-radius:14px;background:#eef5ff;color:var(--blue-dark);display:grid;place-items:center;font-weight:950;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.photo-preview{width:86px;height:86px;border-radius:22px;background:#eef5ff;color:var(--blue-dark);display:grid;place-items:center;font-weight:950;overflow:hidden;border:1px solid var(--line)}.photo-preview img{width:100%;height:100%;object-fit:cover}.debater-main{display:flex;gap:12px}.score-big{font-size:1.45rem;font-weight:950;text-align:right}
+    .tabs{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:14px}.tabs button{background:#fff;color:var(--blue-dark);border:1px solid #dbe3ee}.tabs button.on{background:var(--blue);color:#fff}.panel{display:none}.panel.on{display:block}.manual h3{font-size:1.55rem}.manual h4{margin-top:18px;color:var(--blue-dark)}.manual ul{color:var(--muted);line-height:1.7}.speech{padding:11px;margin:9px 0;background:#f8fbff;border-left:5px solid var(--blue);border-radius:12px;font-weight:900}.qa{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:16px}.answer{margin-top:12px;padding:15px;border-radius:16px;background:#fff;border:1px solid var(--line);white-space:pre-wrap}.result{padding:14px;border:1px solid var(--line);border-radius:16px;background:#fff;margin-bottom:10px}
+    .full-manual{display:none;margin-top:16px}.full-manual.on{display:block}.judge-list{max-height:360px;overflow:auto}.calendar-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.calendar-title{font-size:1.35rem;font-weight:950}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.dow{font-size:.78rem;color:var(--muted);font-weight:950;text-transform:uppercase;text-align:center}.day{min-height:118px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;cursor:pointer}.day:hover,.day.sel{outline:2px solid var(--blue);background:#f8fbff}.day.off{opacity:.42;background:#f8fafc}.daynum{font-weight:950;margin-bottom:8px}.chip{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.75rem;background:#eef5ff;color:var(--blue-dark);border-radius:9px;padding:5px 7px;margin-top:5px}.event{display:grid;grid-template-columns:84px 1fr auto;gap:14px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff}.time{background:var(--ink);color:#fff;border-radius:15px;text-align:center;padding:10px;font-weight:950}.evalbox{border:1px solid var(--line);background:#f8fbff;border-radius:16px;padding:14px}.evalbox h4{margin:0 0 10px}.evalgrid{display:grid;grid-template-columns:1.2fr repeat(3,.7fr);gap:10px;align-items:end}
+
+    .login-screen{position:fixed;inset:0;z-index:50;background:linear-gradient(135deg,#0f172a,#0f3f83 55%,#2d73c9);display:grid;place-items:center;padding:24px}.login-screen.hide{display:none}.login-card{width:min(520px,100%);display:grid;gap:18px}.login-panel{background:#fff;border-radius:28px;padding:28px;box-shadow:var(--shadow)}.login-brand{color:#fff;text-align:center}.login-brand h1{font-size:clamp(1.12rem,3.2vw,1.55rem);line-height:1.08;margin:0 auto;max-width:440px;white-space:nowrap}.login-quick{display:grid;gap:10px;margin-top:12px}.login-quick button{background:#eef5ff;color:var(--blue-dark);text-align:left}.session{margin-top:16px;padding:14px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#e5eefb}.profile-card{padding:0;overflow:hidden}.profile-banner{height:220px;background:linear-gradient(135deg,#071225,#103a79 45%,#2d73c9);position:relative}.profile-banner img{width:100%;height:100%;object-fit:cover;display:block}.profile-banner:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(3,12,28,.34))}.profile-body{position:relative;display:grid;grid-template-columns:140px 1fr;gap:26px;align-items:center;padding:0 38px 42px 38px;min-height:172px}.profile-meta{display:flex;flex-direction:column;gap:12px;padding-top:6px}.profile-meta h3{margin:0;font-size:1.85rem;line-height:1.1;color:#0f172a}.profile-meta p{margin:0;color:#5a6980;font-weight:700}.student-photo{width:126px;height:126px;border-radius:34px;background:#eef5ff;color:var(--blue-dark);display:grid;place-items:center;font-size:2rem;font-weight:950;overflow:hidden;border:6px solid #fff;box-shadow:0 20px 40px rgba(15,23,42,.18);position:relative;margin-top:-58px;justify-self:center}.student-photo img{width:100%;height:100%;object-fit:cover}.student-actions{display:flex;gap:10px;flex-wrap:wrap}.student-editor{display:none}.student-editor.on{display:block}.profile-upload{display:grid;grid-template-columns:1fr 1fr;gap:14px}.upload-box{border:1px dashed #b9c7dc;background:linear-gradient(180deg,#fbfdff,#f4f8ff);border-radius:18px;padding:16px}.notice{padding:12px 14px;border-radius:15px;background:#eef5ff;color:var(--blue-dark);font-weight:800}.metric{position:relative;overflow:hidden}.metric small{font-weight:900;letter-spacing:.02em}.metric b{font-size:2.15rem;display:block;margin:8px 0 6px;line-height:1;color:#10223f}.metric .muted{font-weight:700}.metric.metric-overall{background:linear-gradient(180deg,#ffffff,#f7faff)}.metric.metric-overall:before,.metric.metric-content:before,.metric.metric-style:before{content:"";position:absolute;left:0;right:0;top:0;height:5px}.metric.metric-overall:before{background:linear-gradient(90deg,#2563eb,#1d4ed8)}.metric.metric-content{background:linear-gradient(180deg,#ffffff,#f4fffc)}.metric.metric-content:before{background:linear-gradient(90deg,#14b8a6,#0f766e)}.metric.metric-style{background:linear-gradient(180deg,#ffffff,#fff8f3)}.metric.metric-style:before{background:linear-gradient(90deg,#f59e0b,#ea580c)}.bar{height:12px;background:#e7eef7;border-radius:99px;overflow:hidden;margin-top:12px}.metric-overall .bar i{background:linear-gradient(90deg,#3b82f6,#1d4ed8)}.metric-content .bar i{background:linear-gradient(90deg,#2dd4bf,#0f766e)}.metric-style .bar i{background:linear-gradient(90deg,#fbbf24,#ea580c)}#studentMetrics{margin-top:42px}#studentMetrics+div{margin-top:32px}.profile-card{margin-bottom:8px}.student-actions{margin-top:4px}.role-checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.role-checks label{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:14px;padding:10px;background:#f8fbff;color:var(--text)}.role-checks input{width:auto}.role-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.hidden{display:none!important}.admin-only.hidden-by-role{display:none!important}.settings-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.danger-zone{border-color:#fecaca;background:#fff7f7}.danger-zone h3{color:#991b1b}.danger-zone p{margin-bottom:14px}
+    @media(max-width:980px){.c4,.c3,.c2,.form,.evalgrid,.profile-upload{grid-template-columns:1fr}aside{height:100vh}.event{grid-template-columns:1fr}.calendar{grid-template-columns:1fr}.dow{display:none}.day{min-height:auto}.login-card{grid-template-columns:1fr}.login-brand h1{font-size:clamp(1.05rem,3.1vw,1.42rem);max-width:420px}.profile-banner{height:160px}.profile-body{grid-template-columns:1fr;gap:14px;padding:0 18px 30px 18px;min-height:auto}.student-photo{width:112px;height:112px;margin-top:-48px;justify-self:start}.profile-meta{gap:10px;padding-top:0}.profile-meta h3{font-size:1.45rem}#studentMetrics{margin-top:32px}#studentMetrics+div{margin-top:24px}.role-checks{grid-template-columns:1fr}}
+    .auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;background:#f4f7fc;padding:6px;border-radius:16px}.auth-tabs button{background:transparent;color:var(--blue-dark);box-shadow:none}.auth-tabs button.on{background:var(--blue);color:#fff}.auth-box{display:none}.auth-box.on{display:block}.auth-message{padding:12px 14px;border-radius:14px;margin:12px 0 0}.login-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.login-tools button{flex:1 1 150px}.form-note{font-size:.82rem;color:var(--muted);margin:8px 0 0}.login-panel h2{margin-top:0}.login-panel form button{width:100%}
+    @media(max-width:720px){.settings-actions{grid-template-columns:1fr}body{overflow-x:hidden;background:#f7faff}.login-screen{display:block;overflow:auto;padding:14px}.login-card{min-height:calc(100dvh - 28px);width:100%;align-content:center}.login-brand,.login-panel{border-radius:20px;padding:20px}.login-brand h1{font-size:clamp(.88rem,3.6vw,1.12rem);line-height:1.08;letter-spacing:0}.login-panel p{line-height:1.5}.auth-tabs{grid-template-columns:1fr}.app{grid-template-columns:72px 1fr}.app.nav-open{grid-template-columns:minmax(230px,78vw) 1fr}aside{padding:12px;position:sticky;height:100vh}.brand{margin-bottom:16px}.nav{grid-template-columns:1fr;gap:8px}.nav button{padding:11px 10px;font-size:.88rem;min-height:44px}.tip{margin-top:16px}main{padding:18px}.tools{flex-direction:column;align-items:stretch}.tools input{width:100%}button,.btn{min-height:44px;white-space:normal}.student-actions{display:grid;grid-template-columns:1fr}.card{padding:16px;border-radius:18px;overflow-x:auto}.profile-card{padding:0}.profile-body{padding:0 16px 24px}.student-photo{justify-self:center}.profile-meta{text-align:center}.profile-meta p{line-height:1.45}.profile-upload{gap:12px}.debater-card{display:grid;gap:12px}.debater-card>div:last-child{display:grid;gap:8px}.debater-main{min-width:0}.score-big{text-align:left}.event{gap:10px}.event>div:last-child{display:grid;grid-template-columns:1fr;gap:8px}.calendar-head{display:grid;grid-template-columns:44px 1fr 44px}.calendar-title{text-align:center;font-size:1rem}.day{padding:12px}.chip{white-space:normal}.evalgrid{grid-template-columns:1fr}.tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}.tabs button{flex:0 0 auto}table{display:block;overflow-x:auto;white-space:nowrap}.role-checks label{align-items:flex-start}.login-tools{display:grid;grid-template-columns:1fr}}
+    @media(max-width:430px){.login-screen{padding:10px}.login-card{min-height:calc(100dvh - 20px);gap:12px}.login-brand,.login-panel{padding:16px;border-radius:18px}.login-brand h1{font-size:clamp(.74rem,3.7vw,.95rem)}.nav{grid-template-columns:1fr}main{padding:12px}.card{padding:14px}.profile-card{padding:0}.auth-tabs button,.nav button,button,.btn{font-size:.92rem}.calendar-title{font-size:.95rem}.time{text-align:left}.student-photo{width:100px;height:100px;border-radius:28px}.metric b{font-size:1.8rem}}
+  </style>
+</head>
+<body>
+
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="login-brand">
+        <h1>Acesse a SESI Sociedade de Debates:</h1>
+      </div>
+      <div class="login-panel">
+        <div id="loginBox" class="auth-box on">
+          <h2>Login</h2>
+          <form id="loginForm" class="form">
+            <label class="full">E-mail<input id="loginEmail" type="email" required autocomplete="email" placeholder="seuemail@exemplo.com"></label>
+            <label class="full">Senha<input id="loginPassword" type="password" required autocomplete="current-password" placeholder="Sua senha"></label>
+            <div class="full"><button type="submit">Entrar</button></div>
+          </form>
+          <p id="loginError" class="red auth-message" style="display:none"></p>
+          <div class="login-tools">
+            <button type="button" class="btn2" onclick="switchAuth('signup')">Criar conta</button>
+          </div>
+        </div>
+        <div id="signupBox" class="auth-box">
+          <h2>Criar conta</h2>
+          <form id="signupForm" class="form">
+            <label class="full">Nome completo<input id="signupName" required autocomplete="name" placeholder="Seu nome"></label>
+            <label class="full">Série/Turma<input id="signupClass" placeholder="Ex.: 2º EM"></label>
+            <label class="full">E-mail<input id="signupEmail" type="email" required autocomplete="email" placeholder="seuemail@exemplo.com"></label>
+            <label class="full">Senha<input id="signupPassword" type="password" required autocomplete="new-password" placeholder="Crie uma senha"></label>
+            <label class="full">Confirmar senha<input id="signupConfirm" type="password" required autocomplete="new-password" placeholder="Repita a senha"></label>
+            <div class="full"><button type="submit">Criar conta</button></div>
+          </form>
+          <p id="signupError" class="red auth-message" style="display:none"></p>
+          <div class="login-tools">
+            <button type="button" class="btn2" onclick="switchAuth('login')">Voltar ao login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="app">
+    <aside>
+      <button type="button" class="menu-toggle" onclick="toggleNav()" aria-label="Abrir abas" title="Abrir abas">☰</button>
+      <div class="brand"><div class="mark">SSD</div><div><h1>SESI Sociedade<br>de Debates</h1><small>Protótipo Web</small></div></div>
+      <div class="nav" id="nav">
+        <button class="on" data-s="student">☻ Meu Painel</button><button data-s="overview">▰ Visão Geral</button><button data-s="debaters">◉ Debatedores</button><button data-s="performance">▤ Desempenho</button><button data-s="manual">▣ Apostila & IA</button><button data-s="judge">▥ Registro do Juiz</button><button data-s="calendar">◷ Calendário</button><button data-s="settings">⚙ Configurações</button>
+      </div>
+      <div class="tip"><b id="sessionName">Sessão</b><p id="sessionRole">Não logado</p></div>
+    </aside>
+    <main>
+      <section id="student" class="sec on">
+        <div class="tools">
+          <div><h2>Meu Painel</h2><p>Área do aluno: acompanhe desempenho, personalize seu perfil e acesse funções liberadas pelo admin.</p></div>
+        </div>
+
+        <div class="card profile-card">
+          <div class="profile-banner" id="studentBanner"></div>
+          <div class="profile-body">
+            <div class="student-photo" id="studentPhoto">A</div>
+            <div class="profile-meta">
+              <h3 id="studentName">Aluno SSD</h3>
+              <p id="studentInfo">Carregando perfil...</p>
+              <div class="student-actions">
+                <button type="button" onclick="editMyProfile()">Editar perfil</button>
+                <button type="button" class="btn2" onclick="show('manual')">Abrir apostila</button>
+                <button type="button" class="btn2" onclick="show('performance')">Ver desempenho</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="studentProfileEditor" class="card student-editor gap-top">
+          <h3>Personalizar meu perfil</h3>
+          <p class="notice">Como aluno, você só pode alterar sua foto e seu banner. Nome, turma e status são administrados pela SSD.</p>
+          <div class="profile-upload">
+            <div class="upload-box">
+              <h4>Foto de perfil</h4>
+              <p>Imagem quadrada. O app recorta automaticamente.</p>
+              <input id="studentAvatarFile" type="file" accept="image/*" onchange="loadStudentAvatar(event)">
+              <div class="student-actions" style="margin-top:10px">
+                <button type="button" class="danger" onclick="removeMyAvatar()">Remover foto</button>
+              </div>
+            </div>
+            <div class="upload-box">
+              <h4>Banner do perfil</h4>
+              <p>Formato recomendado: 960×360. Aceita PNG, JPG, WebP ou GIF.</p>
+              <input id="studentBannerFile" type="file" accept="image/*,image/gif" onchange="loadStudentBanner(event)">
+              <div class="student-actions" style="margin-top:10px">
+                <button type="button" class="danger" onclick="removeMyBanner()">Remover banner</button>
+              </div>
+            </div>
+          </div>
+          <div class="student-actions" style="margin-top:16px">
+            <button type="button" onclick="saveMyProfile()">Salvar alterações</button>
+            <button type="button" class="btn2" onclick="cancelMyProfile()">Cancelar</button>
+          </div>
+        </div>
+
+        <div class="grid c3 gap-top" id="studentMetrics"></div>
+        <div class="grid c2 gap-top">
+          <div class="card"><h3>Meus próximos debates</h3><div id="studentEvents" class="grid"></div></div>
+          <div class="card"><h3>Minhas notas</h3><div id="studentScores"></div></div>
+        </div>
+      </section>
+      <section id="overview" class="sec"><div class="grid c4" id="metrics"></div><div class="grid c2" style="margin-top:16px"><div class="card"><h3>Próximos debates</h3><div id="upcoming" class="grid"></div></div><div class="card"><h3>Top debatedores</h3><div id="top"></div></div></div></section>
+      <section id="debaters" class="sec"><div class="tools"><div><h2>Debatedores</h2><p>Cadastro simples. Média e quantidade de debates são calculadas pelo sistema.</p></div><input id="q" placeholder="Buscar debatedor..." oninput="render()" /></div><div class="grid c2"><div class="card"><h3 id="dfTitle">Adicionar debatedor</h3><form id="debaterForm" class="form"><input type="hidden" id="dId" /><label>Nome<input id="dName" required placeholder="Ex.: Ana Souza" /></label><label>Série/Turma<input id="dClass" placeholder="Ex.: 2º EM" /></label><label>Status<select id="dStatus"><option>Ativo</option><option>Em treinamento</option><option>Reserva</option></select></label>
+<label class="full">Permissões definidas pelo admin
+  <div class="role-checks">
+    <label><input id="dRoleJudge" type="checkbox"> Também pode atuar como juiz</label>
+  </div>
+  <small>Todos são alunos/debatedores por padrão. Marque juiz apenas para quem também pode julgar debates.</small>
+</label>
+<label>Foto de perfil<input id="dPhotoFile" type="file" accept="image/*" onchange="loadDebaterPhoto(event)"></label><input type="hidden" id="dPhoto"><div class="full"><div class="photo-preview" id="dPhotoPreview">Foto</div></div><div class="full"><button type="submit">Salvar perfil</button> <button type="button" class="btn2" onclick="resetDebater()">Limpar</button> <button type="button" class="danger" onclick="removeDebaterPhoto()">Remover foto</button></div></form></div><div class="card"><h3>Lista</h3><div id="debaterCards" class="grid"></div></div></div></section>
+      <section id="performance" class="sec"><div class="tools"><div><h2>Desempenho</h2><p>Calculado somente a partir das avaliações lançadas nos debates.</p></div></div><div class="grid c3" id="perf"></div><div class="card" style="margin-top:16px"><h3>Ranking geral</h3><table><thead><tr><th>#</th><th>Debatedor</th><th>Debates</th><th>Conteúdo</th><th>Estilo</th><th>Estratégia</th><th>Média</th></tr></thead><tbody id="rank"></tbody></table></div></section>
+      <section id="manual" class="sec manual"><div class="tools"><div><h2>Apostila, busca e IA</h2><p>Consulte regras, procure termos e tire dúvidas dentro do próprio site.</p></div><button type="button" class="btn2" onclick="toggleFullManual()">Ler apostila na íntegra</button></div><div class="grid c2"><div class="qa"><h3>Consultar apostila</h3><input id="manualSearch" placeholder="Busque por POI, reply, moção, definição, pontuação..." oninput="searchManual()" /><div id="searchResults" style="margin-top:12px"></div></div><div class="qa"><h3>Tirar dúvida com IA</h3><p>Protótipo offline: responde usando a apostila embutida. Para IA real, depois conecta uma API.</p><textarea id="aiQuestion" placeholder="Ex.: O 3º debatedor pode trazer argumento novo?"></textarea><button type="button" onclick="askAI()">Perguntar</button><div id="aiAnswer" class="answer">Faça uma pergunta sobre regras, funções, POIs, moções ou julgamento.</div></div></div><div class="tabs" id="tabs" style="margin-top:16px"><button class="on" data-p="intro">Introdução</button><button data-p="formato">Formato</button><button data-p="def">Definições</button><button data-p="roles">Papéis</button><button data-p="pois">POIs</button><button data-p="score">Pontuação</button><button data-p="motions">Moções</button><button data-p="judge">Julgamento</button><button data-p="gloss">Glossário</button></div><div id="manualPanels"></div><div id="fullManual" class="card full-manual"></div></section>
+      <section id="judge" class="sec"><div class="tools"><div><h2>Registro do Juiz</h2><p>Registre o debate que aconteceu, quem participou, a decisão e a pontuação de cada fala.</p></div></div><div class="grid c2"><div class="card"><h3>Selecionar debate</h3><label>Debate<select id="judgeEventSelect" onchange="loadJudgeEvent()"></select></label><div id="judgeEventInfo" style="margin-top:14px"></div><div class="grid c2" style="margin-top:14px"><label>Juiz responsável<input id="judgeName" placeholder="Nome do juiz"></label><label>Vencedor<select id="judgeWinner"><option value="">Sem decisão</option><option>Governo</option><option>Oposição</option></select></label></div><label style="margin-top:14px">Justificativa / OA<textarea id="judgeDecision" placeholder="Resumo da decisão, choques principais, feedback geral..."></textarea></label><button type="button" style="margin-top:12px" onclick="saveJudgeRecord()">Salvar registro do juiz</button></div><div class="card"><h3>Pontuação dos participantes</h3><p>As notas seguem a lógica WSDC: construtivos usam Conteúdo 24-32, Estilo 24-32, Estratégia 12-16. Replies usam metade da escala.</p><div id="judgeScores" class="grid"></div></div></div><div class="card" style="margin-top:16px"><h3>Registros salvos</h3><div id="judgeSaved" class="judge-list"></div></div></section><section id="calendar" class="sec"><div class="tools"><div><h2>Calendário</h2><p>Clique em um dia para visualizar a agenda de debates da SSD.</p></div><button type="button" class="admin-only" onclick="resetEvent();show('calendar')">Novo debate</button></div><div class="grid c2"><div class="card"><div class="calendar-head"><button type="button" class="btn2" onclick="moveMonth(-1)">←</button><div class="calendar-title" id="calTitle"></div><button type="button" class="btn2" onclick="moveMonth(1)">→</button></div><div class="calendar" id="calendarGrid"></div></div><div class="card admin-only"><h3 id="efTitle">Novo debate</h3><form id="eventForm" class="form"><input type="hidden" id="eId" /><label>Data<input id="eDate" type="date" required onchange="updateDateFromInput()" /></label><label>Horário<input id="eTime" type="time" required /></label><label class="full">Dia da semana<input id="eWeekday" disabled /></label><label class="full">Moção<input id="eMotion" required placeholder="Ex.: Esta Casa proibiria celulares na escola" /></label><label>Formato<select id="eFormat"><option>Treino interno</option><option>Simulado WSDC</option><option>Campeonato</option><option>Aula prática</option></select></label><label>Local<input id="ePlace" placeholder="Sala, auditório ou link" /></label><label class="full">Escalação<div id="lineup" class="grid c2"></div></label><label class="full">Avaliação dos participantes<div id="evals" class="grid"></div></label><div class="full"><button type="submit">Salvar debate</button> <button type="button" class="btn2" onclick="resetEvent()">Limpar</button></div></form></div></div><div class="card" style="margin-top:16px"><h3 id="dayTitle">Debates do dia</h3><div id="dayEvents" class="grid"></div></div><div class="card"><h3>Todos os debates</h3><p class="muted">Lista geral dos debates cadastrados.</p><div id="allEvents" class="grid"></div><button type="button" class="danger admin-only" style="margin-top:12px" onclick="deleteAllEvents()">Excluir todos os debates</button></div></section>
+      <section id="settings" class="sec">
+        <div class="tools"><div><h2>Configurações</h2><p>Gerencie sua sessão e ajustes liberados para o seu perfil.</p></div></div>
+        <div class="grid c2">
+          <div class="card"><h3>Conta</h3><p class="muted">Sessão atual: <b id="settingsSessionName">Usuário</b></p><button type="button" class="danger" onclick="logout()">Sair da conta</button></div>
+          <div class="card admin-only"><h3>Manutenção</h3><p class="muted">Use apenas quando o navegador estiver pesado ou com imagens antigas salvas.</p><div class="settings-actions"><button type="button" class="btn2" onclick="clearHeavyImages()">Limpar imagens pesadas</button><button type="button" class="btn2" onclick="hardResetSession()">Limpar sessão atual</button></div></div>
+          <div class="card danger-zone admin-only"><h3>Zona de risco</h3><p>Apaga cadastros, debates, contas e volta o app para o padrão inicial.</p><button type="button" class="danger" onclick="resetBrokenData()">Resetar dados do app</button></div>
+        </div>
+      </section>
+    </main>
+  </div>
+<script>
+(function(){
+'use strict';
+const K={d:'ssd_debaters_v5',e:'ssd_events_v5',u:'ssd_current_user_v1',a:'ssd_accounts_v1'};
+const AUTH_VERSION=2;
+const ADMIN_EMAIL='admin@ssd.com';
+const ADMIN_PASSWORD='SSDadmin2026!';
+const roles=['1º Governo','2º Governo','3º Governo','Reply Governo','1º Oposição','2º Oposição','3º Oposição','Reply Oposição'];
+const uid=()=>window.crypto&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+String(Math.random());
+const manual=[
+{id:'intro',title:'Introdução ao World Schools',text:'O World Schools é um formato competitivo de debate escolar. Avalia persuasão, raciocínio, repertório, organização e capacidade de responder ao outro lado. Um bom debatedor entende a moção antes de escolher argumentos, explica mecanismos, responde diretamente ao outro lado, compara impactos e fala com clareza estratégica.'},
+{id:'formato',title:'Formato',text:'Duas equipes se enfrentam: Governo ou Proposição e Oposição. Cada equipe pode preparar com até 5 pessoas, mas apenas 3 fazem discursos construtivos na rodada. Os discursos construtivos têm 8 minutos. Depois há dois replies de 4 minutos: primeiro Oposição, depois Governo. Apenas o 1º ou 2º debatedor de cada equipe pode fazer reply.'},
+{id:'def',title:'Definições e modelos',text:'O 1º Governo deve definir a moção de forma razoável, próxima ao sentido óbvio e capaz de gerar debate justo. Uma definição justa segue o significado comum, dá terreno à Oposição e não restringe artificialmente a moção. Definições injustas incluem squirreling, truísmo, tautologia, definição restritiva e definição geral demais. Se a definição for injusta, o 1º Oposição pode desafiar, explicar o problema, propor uma definição razoável e debater a partir dela.'},
+{id:'roles',title:'Papéis dos oradores',text:'1º Governo define a moção, apresenta problema, métricas, modelo quando necessário, divisão de caso e argumentos construtivos. 1º Oposição responde ao Governo, desafia definição injusta se necessário, apresenta postura e argumentos próprios ou refutação robusta. 2ºs debatedores aprofundam análise, respondem ao outro lado, fazem pesagem e adicionam camadas. 3ºs debatedores organizam e vencem choques; podem evoluir material já colocado, mas não devem salvar o debate com argumento totalmente novo não anunciado. Replies são sínteses enviesadas e comparativas sem novo argumento independente.'},
+{id:'pois',title:'POIs',text:'POIs são perguntas ou intervenções curtas oferecidas pela equipe adversária durante discursos construtivos. Podem ser oferecidos depois do 1º minuto e antes do último minuto. Não existem POIs nos replies. Cada POI deve durar cerca de 15 segundos. O orador pode aceitar ou recusar. A expectativa competitiva é aceitar de 1 a 2 POIs por discurso. Tomar bons POIs demonstra domínio e engajamento.'},
+{id:'score',title:'Pontuação',text:'Pontuação WSDC usa Conteúdo 40%, Estilo 40% e Estratégia 20%. Conteúdo avalia argumentos, lógica, mecanismos, exemplos, refutação, respostas aos POIs e pesagem analítica. Estilo avalia clareza, ritmo, volume, pausas, contato visual, linguagem, presença e persuasão; sotaque não é avaliado. Estratégia avalia priorização, estrutura, tempo, escolha dos choques, consistência e engajamento. Construtivos costumam ficar entre 60 e 80; replies entre 30 e 40.'},
+{id:'motions',title:'Tipos de moção',text:'Policy: Esta Casa faria X, em que Governo defende implementar uma política e Oposição pode defender status quo, alternativa ou contra-modelo. Agente: Esta Casa, enquanto X, faria Y, em que o debate é do ponto de vista do agente. Análise: Esta Casa acredita que X, exigindo provar uma tese. Apoia ou opõe-se avalia fenômeno, prática ou narrativa como existe. Prefere X a Y compara modelos ou mundos. Lamenta X exige contrafactual histórico plausível.'},
+{id:'judge',title:'Julgamento',text:'O juiz deve agir como pessoa comum, inteligente, informada, imparcial e aberta ao convencimento. Julga o debate que aconteceu, não o que gostaria que tivesse acontecido. Não deve usar conhecimento técnico próprio para derrubar argumento não respondido, preencher lacunas, punir equipe por não trazer argumento desejado ou decidir por gosto pessoal. Decide identificando choques, avaliando quem venceu cada um, comparando importância relativa e explicando por que um lado foi mais persuasivo.'},
+{id:'gloss',title:'Glossário',text:'Argumento é uma razão estruturada para provar que a moção deve passar ou cair. Ônus é o que uma equipe precisa provar. Choque é uma discordância central entre os lados. Mecanismo explica como ou por que algo acontece. Impacto é a consequência relevante de um argumento. Pesagem compara importância entre argumentos ou impactos. Framing enquadra como o juiz deve avaliar. Rebuttal é resposta direta ao material do outro lado. Contrafactual é mundo alternativo plausível usado em moções retrospectivas.'}
+];
+const defaultDebaters=[
+  {id:uid(),name:'Marina Alves',className:'2º EM',status:'Ativo',photo:'',banner:'',roles:[]},
+  {id:uid(),name:'Lucas Ferreira',className:'3º EM',status:'Ativo',photo:'',banner:'',roles:['judge']},
+  {id:uid(),name:'Beatriz Lima',className:'1º EM',status:'Em treinamento',photo:'',banner:'',roles:[]}
+];
+
+let D=safeParse(localStorage.getItem(K.d),null);
+if(!Array.isArray(D)||D.length===0) D=defaultDebaters;
+D=D.map((d,i)=>({
+  id:d&&d.id?String(d.id):('debater_'+i+'_'+Date.now()),
+  name:d&&d.name?String(d.name):('Debatedor '+(i+1)),
+  className:d&&d.className?String(d.className):'',
+  status:d&&d.status?String(d.status):'Ativo',
+  photo:d&&d.photo?String(d.photo):'',
+  banner:d&&d.banner?String(d.banner):'',
+  roles:d&&Array.isArray(d.roles)&&d.roles.includes('judge')?['judge']:[]
+}));
+if(D[1] && !(D[1].roles||[]).includes('judge')) D[1].roles=['judge'];
+
+let E=safeParse(localStorage.getItem(K.e),null);
+if(!Array.isArray(E)) E=[];
+if(E.length===0){
+  E=[{id:uid(),date:new Date(Date.now()+2592e5).toISOString().slice(0,10),time:'14:00',motion:'Esta Casa proibiria celulares na escola',format:'Treino interno',place:'Sala de debates',lineup:[],scores:{}}];
+}
+E=E.map((ev,i)=>({
+  ...ev,
+  id:ev&&ev.id?String(ev.id):('event_'+i+'_'+Date.now()),
+  date:ev&&ev.date?String(ev.date):new Date().toISOString().slice(0,10),
+  time:ev&&ev.time?String(ev.time):'14:00',
+  motion:ev&&ev.motion?String(ev.motion):'Debate sem título',
+  format:ev&&ev.format?String(ev.format):'Treino interno',
+  place:ev&&ev.place?String(ev.place):'',
+  lineup:Array.isArray(ev&&ev.lineup)?ev.lineup:[],
+  scores:ev&&ev.scores&&typeof ev.scores==='object'?ev.scores:{}
+}));
+if(E[0]&&E[0].lineup.length===0&&D.length>=3){
+  E[0].lineup=[{role:roles[0],debaterId:D[0].id},{role:roles[1],debaterId:D[1].id},{role:roles[4],debaterId:D[2].id}];
+}
+
+let A=safeParse(localStorage.getItem(K.a),null);
+if(!Array.isArray(A)) A=[];
+A=A.map((a,i)=>({
+  id:a&&a.id?String(a.id):('account_'+i+'_'+Date.now()),
+  role:'student',
+  name:a&&a.name?String(a.name):'Aluno SSD',
+  email:a&&a.email?String(a.email).trim().toLowerCase():'',
+  password:a&&a.password?String(a.password):'',
+  debaterId:a&&a.debaterId?String(a.debaterId):''
+})).filter(a=>a.email&&a.password);
+function accountByEmail(email){return A.find(a=>a.email===String(email||'').trim().toLowerCase())}
+function saveAccounts(){return safeStore(K.a,JSON.stringify(A))}
+function ensureDebaterForAccount(account){
+  let debater=D.find(d=>d.id===account.debaterId);
+  if(!debater){
+    debater={id:account.debaterId||uid(),name:account.name||'Aluno SSD',className:account.className||'',status:'Ativo',photo:'',banner:'',roles:[]};
+    account.debaterId=debater.id;
+    D=[...D,debater];
+    save();
+  }
+  return debater;
+}
+
+let currentUser=safeParse(localStorage.getItem(K.u),null);
+if(currentUser&&currentUser.authVersion!==AUTH_VERSION){
+  localStorage.removeItem(K.u);
+  currentUser=null;
+}
+const localPreviewAdmin=location.protocol==='file:';
+if(localPreviewAdmin){
+  currentUser={id:'u_admin',role:'admin',name:'Admin SSD',email:ADMIN_EMAIL,debaterId:'',authVersion:AUTH_VERSION};
+  localStorage.setItem(K.u,JSON.stringify(currentUser));
+}
+let storageWarningShown=false;
+function safeStore(key,value){
+  try{
+    localStorage.setItem(key,value);
+    return true;
+  }catch(e){
+    console.warn('Falha ao salvar no navegador:', e);
+    return false;
+  }
+}
+function normalizeCurrentUser(){
+  if(!currentUser)return;
+  if(currentUser.role==='admin'){
+    currentUser={id:'u_admin',role:'admin',name:'Admin SSD',email:ADMIN_EMAIL,debaterId:'',authVersion:AUTH_VERSION};
+    safeStore(K.u,JSON.stringify(currentUser));
+    return;
+  }
+  const account=accountByEmail(currentUser.email);
+  if(!account){
+    localStorage.removeItem(K.u);
+    currentUser=null;
+    return;
+  }
+  const debater=ensureDebaterForAccount(account);
+  currentUser={
+    id:account.id,
+    role:'student',
+    name:debater?debater.name:account.name,
+    email:account.email,
+    debaterId:debater?debater.id:'',
+    authVersion:AUTH_VERSION
+  };
+  safeStore(K.u,JSON.stringify(currentUser));
+}
+normalizeCurrentUser();
+
+let viewDate=new Date();
+let selectedDate=new Date().toISOString().slice(0,10);
+function safeParse(value,fallback){try{return JSON.parse(value)}catch(e){return fallback}}
+function $(s){return document.querySelector(s)}
+function $$(s){return Array.from(document.querySelectorAll(s))}
+function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function save(){
+  let okD=safeStore(K.d,JSON.stringify(D));
+  let okE=safeStore(K.e,JSON.stringify(E));
+  let okA=saveAccounts();
+  if(okD&&okE&&okA)return true;
+
+  // Recuperação automática: o erro mais comum no protótipo HTML é excesso de imagem/base64 no localStorage.
+  // Primeiro remove banners, que costumam ser maiores. Se ainda falhar, remove fotos também.
+  D=D.map(d=>({...d,banner:''}));
+  okD=safeStore(K.d,JSON.stringify(D));
+  okE=safeStore(K.e,JSON.stringify(E));
+  okA=saveAccounts();
+  if(okD&&okE&&okA){
+    if(!storageWarningShown){
+      storageWarningShown=true;
+      alert('O navegador estava sem espaço. Removi banners pesados para conseguir salvar.');
+    }
+    return true;
+  }
+
+  D=D.map(d=>({...d,photo:'',banner:''}));
+  okD=safeStore(K.d,JSON.stringify(D));
+  okE=safeStore(K.e,JSON.stringify(E));
+  okA=saveAccounts();
+  if(okD&&okE&&okA){
+    if(!storageWarningShown){
+      storageWarningShown=true;
+      alert('O navegador estava sem espaço. Removi imagens pesadas para conseguir salvar.');
+    }
+    return true;
+  }
+
+  alert('Não consegui salvar no navegador. Entre como admin e abra Configurações para fazer a manutenção do app.');
+  return false;
+}
+function sectionParagraphs(text){return text.split('. ').map(s=>s.trim()).filter(Boolean).map(s=>'<p>'+esc(s)+(s.endsWith('.')?'':'.')+'</p>').join('')}
+function panelHTML(item){return '<div class="card panel '+(item.id==='intro'?'on':'')+'" id="p-'+item.id+'"><h3>'+esc(item.title)+'</h3>'+sectionParagraphs(item.text)+'</div>'}
+$('#manualPanels').innerHTML=manual.map(panelHTML).join('');
+window.toggleFullManual=function(){const box=$('#fullManual');const open=!box.classList.contains('on');box.classList.toggle('on',open);box.innerHTML=open?'<h3>Apostila completa</h3>'+manual.map(x=>'<h4>'+esc(x.title)+'</h4>'+sectionParagraphs(x.text)).join(''):''};
+
+function currentDebaterForAuth(){return D.find(d=>currentUser&&d.id===currentUser.debaterId)}
+function currentRoles(){if(!currentUser)return[];if(currentUser.role==='admin')return['admin'];const d=currentDebaterForAuth();const roles=['student','debater'];if(d&&Array.isArray(d.roles)&&d.roles.includes('judge'))roles.push('judge');return roles}
+function hasRole(role){return currentRoles().includes(role)}
+function roleLabel(){if(isAdmin())return'Admin';return hasRole('judge')?'Aluno + Juiz':'Aluno'}
+function isAdmin(){return currentUser&&currentUser.role==='admin'}
+function canManageEvents(){return !!isAdmin()}
+function canManageDebaters(){return !!isAdmin()}
+function requireAdmin(action){if(isAdmin())return true;alert('Para '+action+', entre com a conta de administrador.');return false}
+function canJudge(){return isAdmin()||hasRole('judge')}
+function allowedSections(){if(!currentUser)return[];if(isAdmin())return['student','overview','debaters','performance','manual','judge','calendar','settings'];const sections=['student','manual','calendar','performance','settings'];if(canJudge())sections.push('overview','judge');return sections}
+function applyPermissions(){
+  const allowed=allowedSections();
+  $$('.nav button').forEach(btn=>btn.classList.toggle('hidden',!allowed.includes(btn.dataset.s)));
+  $$('.admin-only').forEach(el=>el.classList.toggle('hidden-by-role',!isAdmin()));
+  if(currentUser){
+    $('#loginScreen').classList.add('hide');
+    $('#sessionName').textContent=currentUser.name;
+    $('#sessionRole').textContent=roleLabel();
+    if($('#settingsSessionName'))$('#settingsSessionName').textContent=currentUser.name;
+  }else{
+    $('#loginScreen').classList.remove('hide');
+  }
+}
+function requireSection(id){const allowed=allowedSections();return allowed.includes(id)?id:allowed[0]||'student'}
+window.logout=function(){localStorage.removeItem(K.u);currentUser=null;if($('#loginForm'))$('#loginForm').reset();applyPermissions();$('#loginScreen').classList.remove('hide');if(window.switchAuth)window.switchAuth('login')}
+window.hardResetSession=function(){localStorage.removeItem(K.u);currentUser=null;if($('#loginForm'))$('#loginForm').reset();if($('#signupForm'))$('#signupForm').reset();showAuthMessage('loginError','');showAuthMessage('signupError','');applyPermissions();if(window.switchAuth)window.switchAuth('login');alert('Sessão limpa. Agora tente entrar de novo.')}
+window.clearHeavyImages=function(){D=D.map(d=>({...d,photo:'',banner:''}));save();render();alert('Imagens removidas. Agora excluir/salvar deve funcionar melhor.')}
+window.resetBrokenData=function(){if(!confirm('Resetar todos os dados do protótipo?'))return;localStorage.removeItem(K.d);localStorage.removeItem(K.e);localStorage.removeItem(K.a);localStorage.removeItem(K.u);location.reload()}
+function showAuthMessage(id,msg){const el=$('#'+id);if(!el)return;el.textContent=msg||'';el.style.display=msg?'block':'none'}
+function clearAuthMessages(){showAuthMessage('loginError','');showAuthMessage('signupError','')}
+window.toggleNav=function(){const app=$('.app');const open=!app.classList.contains('nav-open');app.classList.toggle('nav-open',open);const btn=$('.menu-toggle');if(btn){btn.setAttribute('aria-label',open?'Fechar abas':'Abrir abas');btn.title=open?'Fechar abas':'Abrir abas';btn.textContent=open?'×':'☰'}};
+window.switchAuth=function(mode){const signup=mode==='signup';if($('#loginBox'))$('#loginBox').classList.toggle('on',!signup);if($('#signupBox'))$('#signupBox').classList.toggle('on',signup);if($('#loginTab'))$('#loginTab').classList.toggle('on',!signup);if($('#signupTab'))$('#signupTab').classList.toggle('on',signup);clearAuthMessages();setTimeout(()=>{const field=signup?$('#signupName'):$('#loginEmail');if(field)field.focus()},0)};
+function finishLogin(user,debater){
+  currentUser={id:user.id,role:user.role,name:user.role==='admin'?user.name:(debater?debater.name:user.name),email:user.email,debaterId:debater?debater.id:(user.debaterId||''),authVersion:AUTH_VERSION};
+  safeStore(K.u,JSON.stringify(currentUser));
+  normalizeCurrentUser();
+  clearAuthMessages();
+  applyPermissions();
+  window.show(currentUser.role==='admin'?'overview':'student');
+}
+function loginWithFields(){
+  const email=$('#loginEmail').value.trim().toLowerCase();
+  const pass=$('#loginPassword').value;
+  clearAuthMessages();
+  if(email===ADMIN_EMAIL){
+    if(pass===ADMIN_PASSWORD){
+      finishLogin({id:'u_admin',role:'admin',name:'Admin SSD',email:ADMIN_EMAIL,debaterId:''},null);
+    }else{
+      showAuthMessage('loginError','Senha incorreta para este e-mail. Tente novamente.');
+    }
+    return;
+  }
+  const user=accountByEmail(email);
+  if(!user){
+    showAuthMessage('loginError','E-mail não cadastrado. Confira o endereço ou crie uma conta.');
+    return;
+  }
+  if(user.password!==pass){
+    showAuthMessage('loginError','Senha incorreta para este e-mail. Tente novamente.');
+    return;
+  }
+  const debater=ensureDebaterForAccount(user);
+  finishLogin(user,debater);
+}
+function registerWithFields(){
+  const name=$('#signupName').value.trim();
+  const className=$('#signupClass').value.trim();
+  const email=$('#signupEmail').value.trim().toLowerCase();
+  const pass=$('#signupPassword').value;
+  const confirm=$('#signupConfirm').value;
+  clearAuthMessages();
+  if(name.length<3){showAuthMessage('signupError','Digite seu nome completo.');return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showAuthMessage('signupError','Digite um e-mail válido.');return}
+  if(email===ADMIN_EMAIL||accountByEmail(email)){showAuthMessage('signupError','Este e-mail já está cadastrado.');return}
+  if(pass.length<4){showAuthMessage('signupError','A senha precisa ter pelo menos 4 caracteres.');return}
+  if(pass!==confirm){showAuthMessage('signupError','As senhas não conferem.');return}
+  const debater={id:uid(),name,className,status:'Ativo',photo:'',banner:'',roles:[]};
+  const account={id:'u_'+uid(),role:'student',name,email,password:pass,debaterId:debater.id};
+  D=[...D,debater];
+  A=[...A,account];
+  if(!save()){showAuthMessage('signupError','Não consegui salvar o cadastro neste navegador.');return}
+  finishLogin(account,debater);
+}
+$('#loginForm').addEventListener('submit',e=>{e.preventDefault();loginWithFields()});
+if($('#signupForm'))$('#signupForm').addEventListener('submit',e=>{e.preventDefault();registerWithFields()});
+if($('#loginTab'))$('#loginTab').addEventListener('click',()=>window.switchAuth('login'));
+if($('#signupTab'))$('#signupTab').addEventListener('click',()=>window.switchAuth('signup'));
+window.show=function(id){id=requireSection(id);$$('.sec').forEach(x=>x.classList.toggle('on',x.id===id));$$('.nav button').forEach(x=>x.classList.toggle('on',x.dataset.s===id));$('.app').classList.remove('nav-open');const btn=$('.menu-toggle');if(btn){btn.setAttribute('aria-label','Abrir abas');btn.title='Abrir abas';btn.textContent='☰'}render()};
+$('#nav').addEventListener('click',e=>{if(e.target.dataset.s)window.show(e.target.dataset.s)});
+$('#tabs').addEventListener('click',e=>{if(!e.target.dataset.p)return;openManual(e.target.dataset.p)});
+document.addEventListener('click',function(e){
+  const delEventBtn=e.target.closest('.js-delete-event');
+  if(delEventBtn){e.preventDefault();e.stopPropagation();window.delEvent(delEventBtn.dataset.id);return}
+  const editEventBtn=e.target.closest('.js-edit-event');
+  if(editEventBtn){e.preventDefault();e.stopPropagation();window.editEvent(editEventBtn.dataset.id);return}
+  const delDebaterBtn=e.target.closest('.js-delete-debater');
+  if(delDebaterBtn){e.preventDefault();e.stopPropagation();window.delDebater(delDebaterBtn.dataset.id);return}
+  const editDebaterBtn=e.target.closest('.js-edit-debater');
+  if(editDebaterBtn){e.preventDefault();e.stopPropagation();window.editDebater(editDebaterBtn.dataset.id);return}
+});
+function stats(id){const items=[];E.forEach(ev=>(ev.lineup||[]).forEach(l=>{if(l.debaterId===id)items.push({ev,score:(ev.scores||{})[id]})}));const scored=items.filter(x=>x.score&&x.score.total!==undefined);const av=a=>a.length?a.reduce((s,x)=>s+Number(x),0)/a.length:0;return{debates:items.length,scored:scored.length,content:av(scored.map(x=>x.score.content)),style:av(scored.map(x=>x.score.style)),strategy:av(scored.map(x=>x.score.strategy)),total:av(scored.map(x=>x.score.total))}}
+function metric(a,b,c,p){const cls=(a==='Minha média'||a==='Média geral')?'metric-overall':a==='Conteúdo'?'metric-content':a==='Estilo'?'metric-style':'metric-overall';return '<div class="card metric '+cls+'"><small>'+esc(a)+'</small><b>'+esc(b)+'</b><span class="muted">'+esc(c)+'</span><div class="bar"><i style="--w:'+Math.max(5,Math.min(100,Number(p)||5))+'%"></i></div></div>'}
+function avg(a){return a.length?a.reduce((s,x)=>s+Number(x),0)/a.length:0}
+function sortEvent(a,b){return (a.date+a.time).localeCompare(b.date+b.time)}
+function weekday(date){return new Date(date+'T00:00').toLocaleDateString('pt-BR',{weekday:'long'})}
+function eventCard(ev){const lineup=(ev.lineup||[]).map(l=>{const d=D.find(x=>x.id===l.debaterId);return d?l.role+': '+d.name:''}).filter(Boolean),actions=canManageEvents()?'<div><button type="button" class="btn2 js-edit-event" data-id="'+esc(ev.id)+'">Editar</button> <button type="button" class="danger js-delete-event" data-id="'+esc(ev.id)+'">Excluir</button></div>':'';return '<div class="event" data-event-id="'+esc(ev.id)+'"><div class="time">'+esc(ev.time)+'</div><div><b>'+esc(ev.motion)+'</b><br><small class="muted">'+esc(weekday(ev.date))+' · '+esc(ev.format)+' · '+esc(ev.place||'Sem local')+'</small><div>'+(lineup.length?lineup.map(x=>'<span class="pill">'+esc(x)+'</span>').join(''):'<span class="pill red">Sem escalação</span>')+'</div></div>'+actions+'</div>'}
+function currentDebater(){if(!currentUser)return D[0];return D.find(d=>d.id===currentUser.debaterId)||D[0]}
+let profileDraft={photo:'',banner:''};
+function renderStudent(){
+  const d=currentDebater();if(!d)return;
+  const s=stats(d.id),ini=d.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  $('#studentPhoto').innerHTML=d.photo?'<img src="'+esc(d.photo)+'" alt="'+esc(d.name)+'">':esc(ini);
+  $('#studentBanner').innerHTML=d.banner?'<img src="'+esc(d.banner)+'" alt="Banner de perfil">':'';
+  $('#studentName').textContent=d.name;
+  $('#studentInfo').textContent=(d.className||'Sem turma')+' • '+d.status+' • '+roleLabel()+' • '+s.debates+' debate(s)';
+  $('#studentMetrics').innerHTML=[metric('Minha média',s.total?s.total.toFixed(1):'—','Debates avaliados: '+s.scored,s.total?s.total/80*100:5),metric('Conteúdo',s.content?s.content.toFixed(1):'—','Linha de conteúdo',s.content?s.content/32*100:5),metric('Estilo',s.style?s.style.toFixed(1):'—','Clareza e persuasão',s.style?s.style/32*100:5)].join('');
+  const myEvents=E.filter(ev=>(ev.lineup||[]).some(l=>l.debaterId===d.id)).sort(sortEvent);
+  $('#studentEvents').innerHTML=myEvents.map(eventCard).join('')||'<div class="empty">Você ainda não está escalado em debates.</div>';
+  $('#studentScores').innerHTML=myEvents.map(ev=>{const sc=(ev.scores||{})[d.id];return '<p><b>'+esc(ev.motion)+'</b><br><small class="muted">'+esc(ev.date+' '+ev.time)+'</small><br>'+(sc?'<span class="pill green">Total: '+esc(sc.total)+'</span><span class="pill">Conteúdo: '+esc(sc.content)+'</span><span class="pill">Estilo: '+esc(sc.style)+'</span><span class="pill">Estratégia: '+esc(sc.strategy)+'</span>':'<span class="pill yellow">Sem nota ainda</span>')+'</p>'}).join('')||'<div class="empty">Sem notas registradas.</div>';
+}
+window.editMyProfile=function(){const d=currentDebater();if(!d)return;profileDraft={photo:d.photo||'',banner:d.banner||''};$('#studentProfileEditor').classList.add('on');show('student')}
+window.cancelMyProfile=function(){const d=currentDebater();profileDraft={photo:d.photo||'',banner:d.banner||''};$('#studentProfileEditor').classList.remove('on');renderStudent()}
+window.saveMyProfile=function(){const d=currentDebater();if(!d)return;d.photo=profileDraft.photo||'';d.banner=profileDraft.banner||'';save();$('#studentProfileEditor').classList.remove('on');render()}
+window.removeMyAvatar=function(){profileDraft.photo='';const d=currentDebater();if(d){d.photo='';save();renderStudent()}}
+window.removeMyBanner=function(){profileDraft.banner='';const d=currentDebater();if(d){d.banner='';save();renderStudent()}}
+function readImageFile(file,callback){if(!file)return;if(!file.type.startsWith('image/')){alert('Escolha um arquivo de imagem.');return}if(file.size>1200*1024){alert('Imagem muito pesada. Use uma imagem/GIF com até 1,2 MB para o protótipo HTML salvar sem travar.');return}const reader=new FileReader();reader.onload=()=>callback(reader.result);reader.readAsDataURL(file)}
+window.loadStudentAvatar=function(event){const file=event.target.files&&event.target.files[0];readImageFile(file,function(result){const img=new Image();img.onload=function(){const canvas=document.createElement('canvas');const size=420;canvas.width=size;canvas.height=size;const ctx=canvas.getContext('2d');const side=Math.min(img.width,img.height);const sx=(img.width-side)/2;const sy=(img.height-side)/2;ctx.drawImage(img,sx,sy,side,side,0,0,size,size);profileDraft.photo=canvas.toDataURL('image/jpeg',0.86);const d=currentDebater();if(d)d.photo=profileDraft.photo;renderStudent()};img.src=result})}
+window.loadStudentBanner=function(event){const file=event.target.files&&event.target.files[0];readImageFile(file,function(result){profileDraft.banner=result;const d=currentDebater();if(d)d.banner=result;renderStudent()})}
+function render(){
+  applyPermissions();
+  renderStudent();
+  const st=D.map(d=>Object.assign({d},stats(d.id))),rank=[...st].sort((a,b)=>(b.total||0)-(a.total||0)),rated=st.filter(x=>x.scored),active=D.filter(d=>d.status==='Ativo').length,up=E.filter(e=>new Date(e.date+'T'+e.time)>=new Date()).length,av=rated.length?avg(rated.map(x=>x.total)):0;
+  $('#metrics').innerHTML=[metric('Debatedores',D.length,'Membros cadastrados',100),metric('Ativos',active,'Disponíveis para escalação',D.length?active/D.length*100:0),metric('Média avaliada',av?av.toFixed(1):'—','Somente debates avaliados',av?av/80*100:5),metric('Próximos',up,'Debates agendados',up?80:10)].join('');
+  $('#upcoming').innerHTML=[...E].filter(e=>new Date(e.date+'T'+e.time)>=new Date()).sort(sortEvent).slice(0,3).map(eventCard).join('')||'<div class="empty">Nenhum debate futuro.</div>';
+  $('#top').innerHTML=rank.slice(0,5).map((x,i)=>'<p><b>'+(i+1)+'. '+esc(x.d.name)+'</b> <span class="pill green">'+(x.total?x.total.toFixed(1):'sem média')+'</span><br><small class="muted">'+x.debates+' debate(s), '+x.scored+' avaliado(s)</small></p>').join('')||'<div class="empty">Sem debatedores.</div>';
+  const q=($('#q')&&$('#q').value||'').toLowerCase();
+  $('#debaterCards').innerHTML=D.filter(d=>(d.name+' '+d.status+' '+(d.className||'')).toLowerCase().includes(q)).map(d=>{const s=stats(d.id),ini=d.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase(),avatar=d.photo?'<img src="'+esc(d.photo)+'" alt="'+esc(d.name)+'">':esc(ini);return '<div class="debater-card"><div class="debater-main"><div class="avatar">'+avatar+'</div><div><b>'+esc(d.name)+'</b><br><small class="muted">'+esc(d.className||'Sem turma')+'</small><br><span class="pill '+(d.status==='Ativo'?'green':d.status==='Reserva'?'yellow':'black')+'">'+esc(d.status)+'</span><div class="role-badges"><span class="pill">Aluno</span>'+((d.roles||[]).includes('judge')?'<span class="pill">Juiz</span>':'')+'</div></div></div><div><div class="score-big">'+(s.total?s.total.toFixed(1):'—')+'</div><small class="muted">'+s.debates+' debate(s)</small><br><button type="button" class="btn2 js-edit-debater" data-id="'+esc(d.id)+'">Editar perfil</button> <button type="button" class="danger js-delete-debater" data-id="'+esc(d.id)+'">Excluir</button></div></div>'}).join('')||'<div class="empty">Nenhum debatedor encontrado.</div>';
+  $('#perf').innerHTML=[['Conteúdo',avg(rated.map(x=>x.content)),32],['Estilo',avg(rated.map(x=>x.style)),32],['Estratégia',avg(rated.map(x=>x.strategy)),16]].map(x=>metric(x[0],x[1]?x[1].toFixed(1):'—','média dos debates avaliados',x[1]?x[1]/x[2]*100:5)).join('');
+  $('#rank').innerHTML=rank.map((x,i)=>'<tr><td>'+ (i+1) +'</td><td><b>'+esc(x.d.name)+'</b><br><small class="muted">'+esc(x.d.className||'')+'</small></td><td>'+x.debates+'</td><td>'+(x.content?x.content.toFixed(1):'—')+'</td><td>'+(x.style?x.style.toFixed(1):'—')+'</td><td>'+(x.strategy?x.strategy.toFixed(1):'—')+'</td><td><b>'+(x.total?x.total.toFixed(1):'—')+'</b></td></tr>').join('')||'<tr><td colspan="7"><div class="empty">Sem dados.</div></td></tr>';
+  renderLineup();renderCalendar();renderDayList();renderAllEvents();renderJudge();updateWeekday();searchManual();
+}
+function renderPhotoPreview(photo,name){const box=$('#dPhotoPreview');if(!box)return;const ini=(name||'Foto').split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();box.innerHTML=photo?'<img src="'+esc(photo)+'" alt="Foto de perfil">':esc(ini||'Foto')}
+window.loadDebaterPhoto=function(event){const file=event.target.files&&event.target.files[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Escolha um arquivo de imagem.');return}const reader=new FileReader();reader.onload=function(){const img=new Image();img.onload=function(){const canvas=document.createElement('canvas');const size=320;canvas.width=size;canvas.height=size;const ctx=canvas.getContext('2d');const side=Math.min(img.width,img.height);const sx=(img.width-side)/2;const sy=(img.height-side)/2;ctx.drawImage(img,sx,sy,side,side,0,0,size,size);const data=canvas.toDataURL('image/jpeg',0.82);$('#dPhoto').value=data;renderPhotoPreview(data,$('#dName').value)};img.src=reader.result};reader.readAsDataURL(file)}
+window.removeDebaterPhoto=function(){if($('#dPhoto'))$('#dPhoto').value='';if($('#dPhotoFile'))$('#dPhotoFile').value='';renderPhotoPreview('', $('#dName')?$('#dName').value:'')}
+window.editDebater=function(id){if(!canManageDebaters())return alert('Só o admin pode editar debatedores por aqui.');const d=D.find(x=>x.id===id);if(!d)return;window.show('debaters');$('#dfTitle').textContent='Editar perfil';$('#dId').value=d.id;$('#dName').value=d.name;$('#dClass').value=d.className||'';$('#dStatus').value=d.status;$('#dPhoto').value=d.photo||'';const r=d.roles||[];$('#dRoleJudge').checked=r.includes('judge');renderPhotoPreview(d.photo||'',d.name)};
+window.resetDebater=function(){$('#dfTitle').textContent='Adicionar debatedor';$('#debaterForm').reset();$('#dId').value='';if($('#dPhoto'))$('#dPhoto').value='';if($('#dPhotoFile'))$('#dPhotoFile').value='';if($('#dRoleJudge'))$('#dRoleJudge').checked=false;renderPhotoPreview('', '')};
+$('#debaterForm').addEventListener('submit',e=>{e.preventDefault();if(!canManageDebaters())return alert('Só o admin pode salvar debatedores.');const id=$('#dId').value||uid(),old=D.find(d=>d.id===id)||{},roles=$('#dRoleJudge').checked?['judge']:[],p={id,name:$('#dName').value.trim(),className:$('#dClass').value.trim(),status:$('#dStatus').value,photo:$('#dPhoto').value,banner:old.banner||'',roles};D=D.some(d=>d.id===id)?D.map(d=>d.id===id?p:d):[...D,p];A=A.map(a=>a.debaterId===id?{...a,name:p.name}:a);save();window.resetDebater();render()});
+window.delDebater=function(id){
+  if(!requireAdmin('excluir membros'))return;
+  id=String(id||'');
+  if(!id||id==='undefined'||id==='null'){
+    D=D.map((d,i)=>({...d,id:d.id||('debater_'+i+'_'+Date.now())}));
+    save();render();
+    alert('Corrigi IDs antigos. Tente excluir de novo.');
+    return;
+  }
+  const d=D.find(x=>String(x.id)===id);
+  if(!d){alert('Esse membro não existe mais.');render();return}
+  if(!confirm('Excluir '+d.name+'? Isso remove o membro das escalações e apaga as notas dele.'))return;
+
+  const before=D.length;
+  D=D.filter(x=>String(x.id)!==id);
+  E=E.map(e=>{
+    const scores={...(e.scores||{})};
+    delete scores[id];
+    return {...e,lineup:(e.lineup||[]).filter(l=>String(l.debaterId)!==id),scores};
+  });
+  A=A.filter(a=>String(a.debaterId)!==id);
+
+  if(D.length===before){
+    alert('Não consegui excluir este membro. Use Resetar dados se a base antiga estiver corrompida.');
+    return;
+  }
+
+  if(currentUser&&String(currentUser.debaterId)===id){localStorage.removeItem(K.u);currentUser=null}
+  if($('#dId')&&$('#dId').value===id) resetDebater();
+  save();
+  render();
+};
+function renderLineup(sel=[]){const box=$('#lineup');if(!box)return;const current=$$('[data-role]').map(s=>({role:s.dataset.role,debaterId:s.value})).filter(x=>x.debaterId),base=sel.length?sel:current;box.innerHTML=roles.map(r=>{const v=(base.find(x=>x.role===r)||{}).debaterId||'';return '<label>'+esc(r)+'<select data-role="'+esc(r)+'"><option value="">Sem escalação</option>'+D.map(d=>'<option value="'+esc(d.id)+'" '+(v===d.id?'selected':'')+'>'+esc(d.name)+'</option>').join('')+'</select></label>'}).join('');$$('[data-role]').forEach(s=>s.onchange=()=>renderEvals());renderEvals()}
+function scoreBox(l,scores,prefix){const s=scores[l.debaterId]||{},isReply=l.role.includes('Reply');return '<div class="evalbox"><h4>'+esc(l.role)+' — '+esc(l.name)+'</h4><div class="evalgrid"><label>Conteúdo<input data-score="content" data-id="'+esc(prefix+l.debaterId)+'" type="number" min="'+(isReply?12:24)+'" max="'+(isReply?16:32)+'" step=".5" value="'+esc(s.content??'')+'" placeholder="'+(isReply?'12-16':'24-32')+'"></label><label>Estilo<input data-score="style" data-id="'+esc(prefix+l.debaterId)+'" type="number" min="'+(isReply?12:24)+'" max="'+(isReply?16:32)+'" step=".5" value="'+esc(s.style??'')+'" placeholder="'+(isReply?'12-16':'24-32')+'"></label><label>Estratégia<input data-score="strategy" data-id="'+esc(prefix+l.debaterId)+'" type="number" min="'+(isReply?6:12)+'" max="'+(isReply?8:16)+'" step=".5" value="'+esc(s.strategy??'')+'" placeholder="'+(isReply?'6-8':'12-16')+'"></label></div></div>'}
+function renderEvals(scores={}){const box=$('#evals');if(!box)return;const lineup=$$('[data-role]').map(s=>({role:s.dataset.role,debaterId:s.value,name:(D.find(d=>d.id===s.value)||{}).name})).filter(x=>x.debaterId);box.innerHTML=lineup.length?lineup.map(l=>scoreBox(l,scores,'event-')).join(''):'<div class="empty">Escalone debatedores para avaliá-los.</div>'}
+$('#eventForm').addEventListener('submit',e=>{e.preventDefault();const id=$('#eId').value||uid(),lineup=$$('[data-role]').map(s=>({role:s.dataset.role,debaterId:s.value})).filter(x=>x.debaterId),scores={};lineup.forEach(l=>{const vals={};$$('[data-id="'+CSS.escape('event-'+l.debaterId)+'"]').forEach(i=>{if(i.value!=='')vals[i.dataset.score]=Number(i.value)});if(vals.content!==undefined&&vals.style!==undefined&&vals.strategy!==undefined){vals.total=vals.content+vals.style+vals.strategy;scores[l.debaterId]=vals}});const p={id,date:$('#eDate').value,time:$('#eTime').value,motion:$('#eMotion').value.trim(),format:$('#eFormat').value,place:$('#ePlace').value.trim(),lineup,scores};E=E.some(x=>x.id===id)?E.map(x=>x.id===id?p:x):[...E,p];selectedDate=p.date;viewDate=new Date(p.date+'T00:00');save();resetEvent();render()});
+window.editEvent=function(id){if(!canManageEvents())return alert('Só o admin pode editar debates.');const e=E.find(x=>x.id===id);if(!e)return;window.show('calendar');$('#efTitle').textContent='Editar debate';$('#eId').value=e.id;$('#eDate').value=e.date;$('#eTime').value=e.time;$('#eMotion').value=e.motion;$('#eFormat').value=e.format;$('#ePlace').value=e.place||'';selectedDate=e.date;viewDate=new Date(e.date+'T00:00');renderLineup(e.lineup||[]);renderEvals(e.scores||{});updateWeekday();renderCalendar();renderDayList()};
+function renderJudge(){const sel=$('#judgeEventSelect');if(!sel)return;const previous=sel.value;sel.innerHTML=E.sort(sortEvent).map(e=>'<option value="'+esc(e.id)+'">'+esc(e.date+' '+e.time+' — '+e.motion)+'</option>').join('');if(previous)sel.value=previous;if(!sel.value&&E[0])sel.value=E[0].id;loadJudgeEvent(false);$('#judgeSaved').innerHTML=E.filter(e=>e.judge||e.winner||e.decision).sort(sortEvent).map(e=>'<div class="result"><b>'+esc(e.motion)+'</b><p>'+esc(e.date+' '+e.time)+' · Juiz: '+esc(e.judge||'não informado')+' · Vencedor: '+esc(e.winner||'sem decisão')+'</p><p>'+esc(e.decision||'')+'</p></div>').join('')||'<div class="empty">Nenhum registro de juiz salvo.</div>'}
+window.loadJudgeEvent=function(keep=true){const id=$('#judgeEventSelect')&&$('#judgeEventSelect').value;const e=E.find(x=>x.id===id);if(!e)return;$('#judgeName').value=e.judge||'';$('#judgeWinner').value=e.winner||'';$('#judgeDecision').value=e.decision||'';$('#judgeEventInfo').innerHTML='<p><b>'+esc(e.motion)+'</b><br><span class="muted">'+esc(e.date+' · '+e.time+' · '+weekday(e.date))+'</span></p><button type="button" class="danger" onclick="delEvent(\''+esc(e.id)+'\')">Excluir este debate</button>';const lineup=(e.lineup||[]).map(l=>({role:l.role,debaterId:l.debaterId,name:(D.find(d=>d.id===l.debaterId)||{}).name})).filter(x=>x.debaterId);$('#judgeScores').innerHTML=lineup.length?lineup.map(l=>scoreBox(l,e.scores||{},'judge-')).join(''):'<div class="empty">Este debate ainda não tem participantes escalados. Edite no calendário primeiro.</div>'}
+window.saveJudgeRecord=function(){if(!canJudge())return alert('Só juiz ou admin pode registrar decisões.');const id=$('#judgeEventSelect').value;const e=E.find(x=>x.id===id);if(!e)return;const scores={};(e.lineup||[]).forEach(l=>{const vals={};$$('[data-id="'+CSS.escape('judge-'+l.debaterId)+'"]').forEach(i=>{if(i.value!=='')vals[i.dataset.score]=Number(i.value)});if(vals.content!==undefined&&vals.style!==undefined&&vals.strategy!==undefined){vals.total=vals.content+vals.style+vals.strategy;scores[l.debaterId]=vals}});Object.assign(e,{judge:$('#judgeName').value.trim(),winner:$('#judgeWinner').value,decision:$('#judgeDecision').value.trim(),scores});save();render();window.show('judge')};
+window.delEvent=function(id){
+  if(!requireAdmin('excluir debates'))return;
+  id=String(id||'');
+  if(!id||id==='undefined'||id==='null'){
+    E=E.map((ev,i)=>({...ev,id:ev.id||('event_'+i+'_'+Date.now())}));
+    save();render();
+    alert('Corrigi IDs antigos. Tente excluir de novo.');
+    return;
+  }
+  const ev=E.find(e=>String(e.id)===id);
+  if(!ev){alert('Esse debate não existe mais.');render();return}
+  if(!confirm('Excluir o debate: '+ev.motion+'?'))return;
+  const before=E.length;
+  E=E.filter(e=>String(e.id)!==id);
+  if(E.length===before){alert('Não consegui excluir este debate. Use Excluir todos os debates ou Resetar dados.');return}
+  if($('#eId')&&$('#eId').value===id) resetEvent();
+  if($('#judgeEventSelect')&&$('#judgeEventSelect').value===id) $('#judgeEventSelect').value='';
+  save();
+  render();
+};
+window.resetEvent=function(){$('#efTitle').textContent='Novo debate';$('#eventForm').reset();$('#eId').value='';$('#eDate').value=selectedDate;$('#eTime').value='14:00';renderLineup([]);updateWeekday()};
+function renderCalendar(){const y=viewDate.getFullYear(),m=viewDate.getMonth(),first=new Date(y,m,1),start=new Date(first);start.setDate(1-first.getDay());$('#calTitle').textContent=viewDate.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});let html=['dom','seg','ter','qua','qui','sex','sáb'].map(d=>'<div class="dow">'+d+'</div>').join('');for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);const iso=d.toISOString().slice(0,10),evs=E.filter(e=>e.date===iso).sort(sortEvent);html+='<div class="day '+(d.getMonth()!==m?'off':'')+' '+(iso===selectedDate?'sel':'')+'" data-date="'+iso+'"><div class="daynum">'+d.getDate()+'</div>'+evs.slice(0,3).map(e=>'<span class="chip">'+esc(e.time)+' '+esc(e.motion)+'</span>').join('')+(evs.length>3?'<span class="chip">+'+(evs.length-3)+'</span>':'')+'</div>'}$('#calendarGrid').innerHTML=html;$$('.day[data-date]').forEach(day=>day.onclick=()=>selectDay(day.dataset.date))}
+window.moveMonth=function(n){viewDate.setMonth(viewDate.getMonth()+n);renderCalendar()};
+function selectDay(iso){selectedDate=iso;$('#eDate').value=iso;updateWeekday();renderCalendar();renderDayList()}
+window.updateDateFromInput=function(){selectedDate=$('#eDate').value;viewDate=new Date(selectedDate+'T00:00');updateWeekday();renderCalendar();renderDayList()};
+function renderDayList(){const evs=E.filter(e=>e.date===selectedDate).sort(sortEvent);$('#dayTitle').textContent='Debates de '+new Date(selectedDate+'T00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'});$('#dayEvents').innerHTML=evs.map(eventCard).join('')||'<div class="empty">Nenhum debate neste dia.</div>'}
+function renderAllEvents(){const box=$('#allEvents');if(!box)return;box.innerHTML=E.slice().sort(sortEvent).map(eventCard).join('')||'<div class="empty">Nenhum debate cadastrado.</div>'}
+window.deleteAllEvents=function(){if(!requireAdmin('excluir debates'))return;if(!confirm('Excluir TODOS os debates?'))return;E=[];save();resetEvent();render()}
+
+function updateWeekday(){if($('#eDate').value)$('#eWeekday').value=weekday($('#eDate').value)}
+window.searchManual=function(){const q=($('#manualSearch')&&$('#manualSearch').value||'').toLowerCase().trim(),res=$('#searchResults');if(!res)return;if(!q){res.innerHTML='<div class="empty">Digite um termo para consultar toda a apostila.</div>';return}const found=manual.filter(x=>(x.title+' '+x.text).toLowerCase().includes(q)).slice(0,6);res.innerHTML=found.length?found.map(x=>'<div class="result"><b>'+esc(x.title)+'</b><p>'+esc(x.text.slice(0,360))+'...</p><button type="button" class="btn2" onclick="openManual(\''+x.id+'\')">Abrir seção</button></div>').join(''):'<div class="empty">Nada encontrado na apostila.</div>'};
+window.openManual=openManual;function openManual(id){$$('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.p===id));$$('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+id));window.show('manual')}
+window.askAI=function(){const q=($('#aiQuestion').value||'').toLowerCase();let id='intro',prefix='';if(/poi|point|informação/.test(q))id='pois';else if(/3|terceir|novo argumento|material novo/.test(q)){id='roles';prefix='Resposta direta: o 3º debatedor deve focar nos choques e responder ao caso adversário. Ele pode evoluir material já apresentado, mas não deve introduzir um argumento totalmente novo que não tenha sido anunciado antes.\n\n'}else if(/reply|sumário|resumo/.test(q)){id='roles';prefix='Resposta direta: reply é uma síntese enviesada. Ele compara o debate e explica por que seu lado venceu, mas não deve trazer argumento independente novo.\n\n'}else if(/pont|nota|conteúdo|estilo|estratégia|média/.test(q))id='score';else if(/moç|motion|policy|agente|lamenta|prefere/.test(q))id='motions';else if(/defini|modelo|squirrel|truísmo|tautologia/.test(q))id='def';else if(/juiz|julg|adjudica|ganha|vencedor/.test(q))id='judge';else if(/formato|tempo|ordem|equipe/.test(q))id='formato';else prefix='Não achei uma resposta específica. Tente perguntar usando termos como POI, reply, 3º debatedor, pontuação, moção, definição ou julgamento.\n\nResumo útil:\n';const item=manual.find(x=>x.id===id);$('#aiAnswer').textContent=prefix+(prefix.includes('Resumo útil')?manual.map(x=>'• '+x.title).join('\n'):(item?item.text:''))};
+window.resetAllData=function(){if(!confirm('Apagar todos os dados salvos e voltar ao padrão?'))return;localStorage.removeItem(K.d);localStorage.removeItem(K.e);localStorage.removeItem(K.a);localStorage.removeItem(K.u);location.reload()};
+function runTests(){console.assert(Array.isArray(D),'Debaters should be an array');console.assert(Array.isArray(E),'Events should be an array');console.assert(Array.isArray(A),'Accounts should be an array');console.assert(typeof esc('<x>')==='string','esc should return string');console.assert(manual.length>=8,'Manual should have sections');console.assert(roles.length===8,'WSDC lineup should have 8 slots');console.assert(typeof window.delEvent==='function','delEvent should exist');console.assert(typeof window.loadDebaterPhoto==='function','photo upload should exist');console.assert(typeof window.saveMyProfile==='function','student profile save should exist');console.assert(typeof canManageEvents==='function','permission helpers should exist');console.assert(typeof currentRoles==='function','combined roles should exist');console.assert(currentRoles().includes('student')||!currentUser||isAdmin(),'logged non-admin users should be students by default');console.assert(typeof normalizeCurrentUser==='function','login normalization should exist');console.assert(typeof safeStore==='function','safe storage should exist');console.assert(typeof window.switchAuth==='function','auth tabs should exist');console.assert(typeof window.hardResetSession==='function','hard reset login should exist');console.assert(typeof window.delDebater==='function','delete member should exist');console.assert(typeof window.clearHeavyImages==='function','clear images should exist');}
+runTests();window.resetEvent();applyPermissions();if(currentUser){window.show(currentUser.role==='student'?'student':'overview')}else{render();}
+})();
+</script>
+</body>
+</html>
