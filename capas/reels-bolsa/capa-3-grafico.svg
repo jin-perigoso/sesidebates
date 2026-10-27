@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <radialGradient id="glow" cx="0.85" cy="0.78" r="0.5"><stop offset="0" stop-color="#38b2a8" stop-opacity="0.16"/><stop offset="1" stop-color="#38b2a8" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="54" height="54" patternUnits="userSpaceOnUse"><path d="M54 0H0V54" fill="none" stroke="#38b2a8" stroke-opacity="0.06" stroke-width="1.5"/></pattern>
+    <clipPath id="circ"><circle cx="890" cy="470" r="120"/></clipPath>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38b2a8" stop-opacity="0.25"/><stop offset="1" stop-color="#38b2a8" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="#000c1b"/>
+  <rect width="1080" height="1920" fill="url(#grid)"/>
+  <rect width="1080" height="1920" fill="url(#glow)"/>
+  <!-- estrelas -->
+  <g fill="#cfe6e3" opacity="0.5"><circle cx="120" cy="140" r="2"/><circle cx="410" cy="90" r="1.5"/><circle cx="760" cy="180" r="2"/><circle cx="980" cy="1300" r="1.5"/><circle cx="200" cy="1720" r="2"/><circle cx="640" cy="1820" r="1.5"/><circle cx="90" cy="980" r="1.5"/></g>
+  <!-- topo -->
+  <g font-family="JetBrains Mono" font-size="26" letter-spacing="4" fill="#8ea3b8">
+    <text x="70" y="330">OTÁVIO FERNANDES</text>
+    <text x="1010" y="330" text-anchor="end">BOLSA · REELEIÇÃO</text>
+  </g>
+  <line x1="70" y1="365" x2="1010" y2="365" stroke="#1a2c40" stroke-width="2"/>
+  <!-- foto em círculo -->
+  <circle cx="890" cy="470" r="128" fill="#38b2a8"/>
+  <image href="foto.jpg" x="702" y="150" width="432" height="464" clip-path="url(#circ)" preserveAspectRatio="xMidYMid slice"/>
+  <!-- texto -->
+  <text x="70" y="480" font-family="JetBrains Mono" font-size="30" letter-spacing="5" fill="#38b2a8">DO DIA PRA NOITE,</text>
+  <text x="66" y="580" font-family="Liberation Serif, serif" font-style="italic" font-size="84" fill="#38b2a8">a bolsa caiu</text>
+  <text font-family="Inter Display, Inter" font-weight="900" font-size="230" fill="#f0eee8" letter-spacing="-8">
+    <tspan x="58" y="800">14%</tspan>
+  </text>
+  <text x="70" y="880" font-family="Inter" font-weight="700" font-size="46" fill="#cfd8e3">em um único pregão.</text>
+  <!-- gráfico -->
+  <g transform="translate(70 960)">
+    <rect width="940" height="520" rx="26" fill="#091d32" stroke="#1a3550" stroke-width="2"/>
+    <text x="34" y="56" font-family="JetBrains Mono" font-size="24" letter-spacing="3" fill="#8ea3b8"><tspan fill="#f46f5a">●</tspan> IBOVESPA · 26/10/2026</text>
+    <text x="906" y="56" text-anchor="end" font-family="JetBrains Mono" font-size="24" fill="#8ea3b8">B3</text>
+    <path d="M34 400 L90 380 L140 392 L190 350 L240 362 L290 318 L340 330 L390 280 L440 300 L490 240 L540 256 L590 196 L630 214 L670 150 L700 168 L720 150" fill="none" stroke="#38b2a8" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M34 400 L90 380 L140 392 L190 350 L240 362 L290 318 L340 330 L390 280 L440 300 L490 240 L540 256 L590 196 L630 214 L670 150 L700 168 L720 150 V500 H34Z" fill="url(#area)"/>
+    <path d="M720 150 L736 440 L780 452 L820 436 L860 446 L906 430" fill="none" stroke="#f46f5a" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="720" cy="150" r="11" fill="#38b2a8"/>
+    <rect x="600" y="88" width="190" height="40" rx="10" fill="#38b2a8"/>
+    <text x="695" y="116" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="20" fill="#000c1b">EXPECTATIVA</text>
+    <rect x="746" y="370" width="160" height="40" rx="10" fill="#f46f5a"/>
+    <text x="826" y="398" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="20" fill="#000c1b">REALIDADE</text>
+    <text x="696" y="420" text-anchor="end" font-family="Inter Display, Inter" font-weight="900" font-size="64" fill="#f46f5a">−13,88%</text>
+  </g>
+  <text x="70" y="1590" font-family="Inter Display, Inter" font-weight="900" font-size="76" fill="#f0eee8" letter-spacing="-2">E O <tspan fill="#38b2a8">TEU BOLSO</tspan></text>
+  <text x="70" y="1675" font-family="Inter Display, Inter" font-weight="900" font-size="76" fill="#f0eee8" letter-spacing="-2">COM ISSO?</text>
+  <line x1="70" y1="1730" x2="1010" y2="1730" stroke="#38b2a8" stroke-width="5"/>
+</svg>

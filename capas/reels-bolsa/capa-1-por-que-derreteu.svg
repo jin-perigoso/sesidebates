@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000c1b" stop-opacity="0.15"/>
+      <stop offset="0.55" stop-color="#000c1b" stop-opacity="0"/>
+      <stop offset="0.86" stop-color="#000c1b" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#000c1b"/>
+    </linearGradient>
+    <pattern id="grid" width="54" height="54" patternUnits="userSpaceOnUse"><path d="M54 0H0V54" fill="none" stroke="#38b2a8" stroke-opacity="0.07" stroke-width="1.5"/></pattern>
+  </defs>
+  <rect width="1080" height="1920" fill="#000c1b"/>
+  <rect y="1100" width="1080" height="820" fill="url(#grid)"/>
+  <image href="foto.jpg" x="0" y="0" width="1080" height="1160" preserveAspectRatio="xMidYMin slice"/>
+  <rect width="1080" height="1170" fill="url(#fade)"/>
+  <!-- kicker -->
+  <g font-family="JetBrains Mono" font-size="28" letter-spacing="4" fill="#8ed2cc">
+    <circle cx="86" cy="1047" r="9" fill="#f46f5a"/>
+    <text x="110" y="1057">IBOVESPA · 26.10.2026</text>
+  </g>
+  <!-- manchete -->
+  <text font-family="Inter Display, Inter" font-weight="900" font-size="128" fill="#f0eee8" letter-spacing="-4">
+    <tspan x="70" y="1205">POR QUE</tspan>
+    <tspan x="70" y="1330">A BOLSA</tspan>
+    <tspan x="70" y="1455" fill="#38b2a8">DERRETEU?</tspan>
+  </text>
+  <!-- números -->
+  <g font-family="Inter Display, Inter" font-weight="900">
+    <rect x="70" y="1510" width="440" height="150" rx="22" fill="#091d32" stroke="#f46f5a" stroke-opacity="0.5" stroke-width="2"/>
+    <text x="100" y="1560" font-family="JetBrains Mono" font-weight="400" font-size="24" letter-spacing="3" fill="#8ea3b8">IBOVESPA</text>
+    <text x="100" y="1635" font-size="76" fill="#f46f5a" letter-spacing="-2">−13,88%</text>
+    <rect x="540" y="1510" width="440" height="150" rx="22" fill="#091d32" stroke="#38b2a8" stroke-opacity="0.5" stroke-width="2"/>
+    <text x="570" y="1560" font-family="JetBrains Mono" font-weight="400" font-size="24" letter-spacing="3" fill="#8ea3b8">DÓLAR</text>
+    <text x="570" y="1635" font-size="76" fill="#38b2a8" letter-spacing="-2">+8,21%</text>
+  </g>
+  <text x="70" y="1790" font-family="Liberation Serif, serif" font-style="italic" font-size="52" fill="#38b2a8">e o que isso muda no teu bolso</text>
+  <text x="70" y="1860" font-family="JetBrains Mono" font-size="26" letter-spacing="4" fill="#8ea3b8">OTÁVIO FERNANDES</text>
+</svg>

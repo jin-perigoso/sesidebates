@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000c1b" stop-opacity="0.55"/>
+      <stop offset="0.35" stop-color="#000c1b" stop-opacity="0"/>
+      <stop offset="0.62" stop-color="#000c1b" stop-opacity="0.1"/>
+      <stop offset="0.8" stop-color="#000c1b" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#000c1b" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000c1b"/><stop offset="1" stop-color="#000c1b" stop-opacity="0"/></linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity="0.45"/></filter>
+  </defs>
+  <rect width="1080" height="1920" fill="#000c1b"/>
+  <image href="foto.jpg" x="-120" y="300" width="1320" height="1418" preserveAspectRatio="xMidYMin slice"/>
+  <rect y="300" width="1080" height="260" fill="url(#top)"/>
+  <rect width="1080" height="1920" fill="url(#shade)"/>
+  <!-- card de notícia (mesmo estilo do vídeo) -->
+  <g filter="url(#sh)" transform="rotate(-2 540 420)">
+    <rect x="60" y="270" width="960" height="340" rx="26" fill="#ffffff" stroke="#38b2a8" stroke-width="4"/>
+    <path d="M60 296a26 26 0 0 1 26-26h908a26 26 0 0 1 26 26v38H60z" fill="#000c1b"/>
+    <circle cx="98" cy="303" r="8" fill="#556070"/><circle cx="124" cy="303" r="8" fill="#556070"/><circle cx="150" cy="303" r="8" fill="#38b2a8"/>
+    <text x="180" y="313" font-family="JetBrains Mono" font-size="26" fill="#cfd8e3">timesbrasil.com.br</text>
+    <text x="990" y="313" text-anchor="end" font-family="JetBrains Mono" font-size="26" fill="#8ea3b8">26/10/2026</text>
+    <rect x="92" y="430" width="412" height="74" rx="6" fill="#8ed2cc"/>
+    <text font-family="Inter" font-weight="800" font-size="62" fill="#000c1b" letter-spacing="-1">
+      <tspan x="96" y="410">Bolsa derrete</tspan>
+      <tspan x="96" y="488">quase 14%</tspan><tspan> com</tspan>
+      <tspan x="96" y="566">reeleição de Lula</tspan>
+    </text>
+  </g>
+  <!-- chamada -->
+  <text text-anchor="middle" font-family="Inter Display, Inter" font-weight="900" font-size="116" fill="#f0eee8" letter-spacing="-3">
+    <tspan x="540" y="1560">EXISTE UMA</tspan>
+    <tspan x="540" y="1680" fill="#38b2a8">LÓGICA.</tspan>
+  </text>
+  <rect x="250" y="1725" width="580" height="80" rx="20" fill="#101925"/>
+  <text x="540" y="1778" text-anchor="middle" font-family="Inter" font-weight="800" font-size="40" fill="#f0eee8">expectativa <tspan fill="#38b2a8">×</tspan> realidade</text>
+  <text x="540" y="220" text-anchor="middle" font-family="JetBrains Mono" font-size="26" letter-spacing="4" fill="#8ea3b8">OTÁVIO FERNANDES · BOLSA · REELEIÇÃO</text>
+</svg>
