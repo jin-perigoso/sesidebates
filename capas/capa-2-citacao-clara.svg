@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e3eeff"/>
+    </linearGradient>
+    <linearGradient id="therm" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#2d73c9"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  <circle cx="980" cy="200" r="320" fill="#2d73c9" opacity="0.08"/>
+  <circle cx="60" cy="1760" r="260" fill="#0f3f83" opacity="0.06"/>
+  <!-- aspas -->
+  <text x="60" y="600" font-family="DejaVu Serif, serif" font-weight="700" font-size="420" fill="#2d73c9">“</text>
+  <!-- citação -->
+  <text font-family="Inter Display, Inter" font-weight="900" font-size="132" fill="#101216" letter-spacing="-3">
+    <tspan x="80" y="760">Então,</tspan>
+    <tspan x="80" y="900">tudo vira</tspan>
+    <tspan x="80" y="1040" fill="#2d73c9">vapor.</tspan>
+  </text>
+  <rect x="80" y="1110" width="580" height="4" fill="#cad6e6"/>
+  <text x="80" y="1200" font-family="Inter" font-weight="600" font-size="54" fill="#687083">“Ah, subiu um</text>
+  <text x="80" y="1270" font-family="Inter" font-weight="600" font-size="54" fill="#687083">pouquinho…”</text>
+  <!-- termômetro subindo -->
+  <g transform="translate(860 860)">
+    <rect x="-34" y="0" width="68" height="520" rx="34" fill="#fff" stroke="#dbe3ee" stroke-width="6"/>
+    <rect x="-18" y="140" width="36" height="380" rx="18" fill="url(#therm)"/>
+    <circle cx="0" cy="560" r="70" fill="#2d73c9"/>
+    <circle cx="0" cy="560" r="70" fill="none" stroke="#fff" stroke-width="8"/>
+    <path d="M0 -40 L -40 20 M0 -40 L 40 20 M0 -40 V 60" stroke="#ef4444" stroke-width="16" stroke-linecap="round" fill="none" transform="translate(0 -60)"/>
+  </g>
+  <!-- rodapé -->
+  <rect x="80" y="1700" width="920" height="120" rx="30" fill="#101216"/>
+  <circle cx="150" cy="1760" r="34" fill="#2d73c9"/>
+  <text x="150" y="1772" text-anchor="middle" font-family="Inter" font-weight="900" font-size="30" fill="#fff">S</text>
+  <text x="210" y="1772" font-family="Inter" font-weight="800" font-size="36" fill="#fff">SESI Sociedade de Debates</text>
+</svg>

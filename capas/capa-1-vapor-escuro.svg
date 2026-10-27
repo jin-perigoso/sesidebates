@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#0f3f83"/>
+      <stop offset="0.55" stop-color="#101216"/>
+      <stop offset="1" stop-color="#101216"/>
+    </linearGradient>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="28"/></filter>
+    <linearGradient id="txt" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#9cc3f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  <!-- vapor -->
+  <g fill="none" stroke="#ffffff" stroke-linecap="round" opacity="0.18" filter="url(#blur)" stroke-width="70">
+    <path d="M300 1500 C 200 1300, 420 1180, 320 980 S 380 640, 300 420"/>
+    <path d="M560 1550 C 460 1350, 680 1220, 580 1020 S 640 680, 560 380"/>
+    <path d="M820 1500 C 720 1300, 940 1180, 840 980 S 900 640, 820 460"/>
+  </g>
+  <g fill="none" stroke="#ffffff" stroke-linecap="round" opacity="0.35" stroke-width="10">
+    <path d="M300 1500 C 200 1300, 420 1180, 320 980 S 380 640, 300 420"/>
+    <path d="M560 1550 C 460 1350, 680 1220, 580 1020 S 640 680, 560 380"/>
+    <path d="M820 1500 C 720 1300, 940 1180, 840 980 S 900 640, 820 460"/>
+  </g>
+  <!-- tag -->
+  <rect x="80" y="120" width="360" height="72" rx="36" fill="#2d73c9"/>
+  <text x="260" y="168" text-anchor="middle" font-family="Inter" font-weight="900" font-size="32" fill="#fff" letter-spacing="3">SESI DEBATES</text>
+  <!-- texto -->
+  <text x="80" y="760" font-family="Inter" font-weight="700" font-size="64" fill="#9cc3f0">Então,</text>
+  <text font-family="Inter Display, Inter" font-weight="900" font-size="210" fill="url(#txt)" letter-spacing="-6">
+    <tspan x="70" y="960">TUDO</tspan>
+    <tspan x="70" y="1150">VIRA</tspan>
+    <tspan x="70" y="1340">VAPOR.</tspan>
+  </text>
+  <text x="80" y="1500" font-family="Inter" font-weight="600" font-size="48" fill="#dbe5f5">Ah, subiu um pouquinho…</text>
+  <rect x="80" y="1780" width="140" height="10" rx="5" fill="#2d73c9"/>
+  <text x="80" y="1860" font-family="Inter" font-weight="800" font-size="34" fill="#bac6da">SSD · Sociedade de Debates</text>
+</svg>
